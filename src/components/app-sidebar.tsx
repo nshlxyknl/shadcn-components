@@ -108,25 +108,49 @@ const data = {
       ],
     },
     {
-      title: "Skills",
+      title: "Shad-cn",
       url: "#",
       icon: BicepsFlexed,
       items: [
         {
-          title: "JS",
-          url: "#",
+          title: "alert",
+          url: "/alert",
         },
         {
-          title: "React",
-          url: "#",
+          title: "accordion",
+          url: "/accordion",
         },
         {
-          title: "Node",
-          url: "#",
+          title: "card",
+          url: "/card",
         },
         {
-          title: "MongoDb",
-          url: "#",
+          title: "dialog",
+          url: "/dialog",
+        },
+        {
+          title: "dropdown",
+          url: "/dropdown",
+        },
+        {
+          title: "otp",
+          url: "/otp",
+        },
+        {
+          title: "pop",
+          url: "/pop",
+        },
+        {
+          title: "sheet",
+          url: "/sheet",
+        },
+        {
+          title: "table",
+          url: "/table",
+        },
+        {
+          title: "tabs",
+          url: "/tabs",
         },
       ],
     },
