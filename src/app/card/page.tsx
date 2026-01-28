@@ -1,5 +1,6 @@
 "use client"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -8,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -15,13 +17,24 @@ import { toast } from "sonner"
 
 const CardPage = () => {
 
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
     const handleSubmit=(e:React.FormEvent)=>{
         e.preventDefault();
-        setLoading(true)
-toast("saved")
+
+        if (loading) return
+  setLoading(true)
+
+
+        setTimeout(() => {
+           setLoading(false)      
+  toast("Saved")      
+}, 10000)
     }
+
+    useEffect(() => {
+  console.log("loading:", loading)
+}, [loading])
 
    
 
@@ -29,31 +42,44 @@ toast("saved")
      <div className='flex justify-center items-center min-h-screen px-4'>
 
         {
-            loading ? <Skeleton className="h-12 w-12 rounded-full" />:
+            loading ?
+            <>
+            <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+
+            <Badge variant="secondary" className="flex items-center gap-2">
+        Saving
+        <Spinner data-icon="inline-end"  />
+      </Badge>
+      </div>
+      </>
+      :
 
             <Tabs defaultValue="name" className="w-[400px]">
   <TabsList>
     <TabsTrigger value="name">Name</TabsTrigger>
     <TabsTrigger value="email">Email</TabsTrigger>
   </TabsList>
-  <TabsContent value="name"> <Card className={'w-full max-w-md p-6'}>
+  <TabsContent value="name"> 
+    <Card className={'w-full max-w-md p-6'}>
                 <CardContent >
                     <h2 className='text-center text-2xl font-semibold mb-4'> Give your name</h2>
                     <form  onSubmit={handleSubmit} className="space-y-4">
                         <Input type='text' placeholder='name'  className={'p-4'} />
                         <div className="flex justify-center">
-                            <Button type='submit' className="w-full sm:w-auto" >  Save</Button>
+                            <Button type='submit' className="w-full sm:w-auto" > Save</Button>
                         </div>
                     </form>
                 </CardContent>
-            </Card>.</TabsContent>
+            </Card>
+            </TabsContent>
   <TabsContent value="email"> <Card className={'w-full max-w-md p-6'}>
                 <CardContent >
                     <h2 className='text-center text-2xl font-semibold mb-4'> Give your email</h2>
                     <form  onSubmit={handleSubmit} className="space-y-4">
                         <Input type='email' placeholder='email' className={'p-4'} />
                         <div className="flex justify-center">
-                            <Button type='submit' className="w-full sm:w-auto" > Save</Button>
+                            <Button type='submit' className="w-full sm:w-auto" >Save</Button>
                         </div>
                     </form>
                 </CardContent>

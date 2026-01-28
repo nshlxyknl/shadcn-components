@@ -1,3 +1,4 @@
+"use client"
 
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -16,6 +17,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 
 
@@ -24,6 +27,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const pathname = usePathname();
+        const segments = pathname.split("/").filter(Boolean)
   return (
     <html lang="en">
       <body>
@@ -44,10 +50,33 @@ export default function RootLayout({
                     Home
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                {/* <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem> */}
+                
+                {segments.map((segment, index) => {
+          const href = "/" + segments.slice(0, index + 1).join("/")
+          const isLast = index === segments.length - 1
+
+           return (
+            <span key={href} className="flex items-center">
+              <BreadcrumbSeparator />
+
+              <BreadcrumbItem>
+                {isLast ? (
+                  <BreadcrumbPage>
+                    {segment}
+                  </BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link href={href}>
+                      {segment}
+                    </Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </span>
+          )
+})
+}
+
               </BreadcrumbList>
             </Breadcrumb>
           </div>
